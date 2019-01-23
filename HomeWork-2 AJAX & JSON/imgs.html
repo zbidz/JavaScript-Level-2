@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>imgs</title>
+</head>
+<body>
+<div class="gallery"></div>
+<link rel="stylesheet" href="css/imgs.css">
+<script>
+
+	function Container(imgs) {
+		this.className = 'container';
+		 this.imgs = imgs;
+		 this.htmlCode = '';
+	}
+
+	Container.prototype.render = function(){
+
+
+		for(var i = 0; i < this.imgs.length;i++){
+			this.htmlCode += '<div class=' + this.className + '>';
+			this.htmlCode += this.imgs[i].render();
+			this.htmlCode += '</div>';
+		}
+		return this.htmlCode;
+	};
+
+	function Img(name,src){
+     this.name = name;
+     this.src = src;
+	}
+
+	Img.prototype.render= function (){
+		var result = '';
+
+		result += '<img src="' + this.src + '" alt="' + this.name + '">';
+		result += '<a href="'+ this.src + '">Ссылка на полноэкраную картинку ' + this.name + '</a>';
+		return result;
+	};
+
+
+window.onload = function() {
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","json/imgs.json",true);
+
+	xhr.onreadystatechange= function () {
+
+		if(xhr.readyState !== 4) return;
+
+		if(xhr.status !== 200){
+			console.log("ERROR", xhr.status, xhr.statusText);
+		}else{
+			var arrayImg = [];
+			var imgs = JSON.parse(xhr.responseText);
+			for(var i = 0; i< imgs.length; i ++){
+				arrayImg.push(new Img(imgs[i].name, imgs[i].src))
+			}
+			var gallery = document.querySelector('.gallery');
+			gallery.innerHTML = (new Container(arrayImg).render());
+		}
+	};
+	xhr.send();
+
+}
+</script>
+</body>
+</html>
