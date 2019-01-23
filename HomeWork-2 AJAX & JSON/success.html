@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>success and error</title>
+</head>
+<body>
+<button class="success">success</button>
+<button class="error">error</button>
+
+<script>
+
+	function XhrHandler(xhr_obj){
+		this.result = xhr_obj.result;
+
+	}
+
+	XhrHandler.prototype.response = function(){
+
+		if (this.result === 'success'){
+			alert("успешный запрос");
+		}else if(this.result === 'error'){
+			alert("произошла ошибка на сервере");
+		}else{
+			alert("произошла ошибка попробуйте еще раз позже");
+		}
+	};
+
+	window.onload= function (){
+
+		var xhr = new XMLHttpRequest();
+
+		document.querySelector('.success').addEventListener('click',function(){
+			xhr.open("GET",'json/resultsuccess.json',true);
+			xhr.send();
+		});
+
+		document.querySelector('.error').addEventListener('click',function(){
+			xhr.open("GET",'json/resulterror.json',true);
+			xhr.send();
+		});
+
+
+		xhr.onreadystatechange = function (){
+
+			if(xhr.readyState !== 4) return;
+
+			if(xhr.status !== 200){
+				console.log("Error",xhr.status,xhr.statusText);
+			}else{
+				var result = JSON.parse(xhr.responseText);
+				result = new XhrHandler(result);
+			  result.response();
+			}
+		}
+	};
+
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+.gallery{
+	width: 1366px;
+}
+.container{
+	width: 400px;
+	float: left;
+	box-shadow: 0px 0px 1px black;
+	margin-left: 50px;
+	padding:20px;
+}
+.container img{
+	width:400px;
+	height: 300px;
+}
+.container a {
+	display: block;
+	text-align: center;
+}

@@ -1,0 +1,60 @@
+[
+  {"href": "/", "title":"Главная"},
+  {"href": "/catalog/", "title":"Товары" ,
+    "submenu": [
+      {
+        "href": "/outerwear/",
+        "title": "Верхняя Одежда",
+        "submenu":[
+          {
+            "href": "/jackets/",
+            "title": "Куртки",
+            "submenu": [
+              {
+                "href": "/leather/",
+                "title": "Кожаные"
+              },
+              {
+                "href": "/snow/",
+                "title": "Зимние",
+                "submenu":[
+                  {
+                    "href":"/fluff",
+                    "title":"пуховики",
+                    "submenu":[
+                      {
+                        "href":"/columbia",
+                        "title":"columbia"
+                      },
+                      {
+                        "href":"/alaska/",
+                        "title":"alaska"
+                      }
+                    ]
+                  },
+                  {
+                    "href":"/parka/",
+                    "title":"Парка"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {"href": "/contacts/", "title":"Контакты",
+    "submenu":[
+    {
+      "href": "/address/", "title":"Адресс"
+    }
+      ]
+  },
+  {"href": "/aboutus/", "title":"О нас"},
+  {"href": "/myaccount/", "title":"Личный кабинет",
+  "submenu":[
+    {"href": "/basket/", "title":"Корзина"},
+    {"href": "/orders/", "title":"Мои Заказы"}
+  ]}
+]
