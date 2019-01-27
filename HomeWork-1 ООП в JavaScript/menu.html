@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+<nav></nav>
+
+<button id="render">Render</button>
+<button id="remove">Remove</button>
+
+<script>
+
+
+    function Container() {
+        this.id = '';
+        this.htmlCode = '';
+    }
+
+    Container.prototype.remove = function (id) {
+        id = id || this.id;
+        var elem = document.getElementById(id);
+
+        if (elem)
+            elem.parentNode.removeChild(elem);
+    };
+
+    Container.prototype.render = function () {
+        return this.htmlCode;
+    };
+
+    function Menu(myId, myClass, myItems) {
+        Container.call(this);
+
+        this.id = myId;
+        // this.className = myClass;
+        this.items = myItems;
+    }
+
+    Menu.prototype = Object.create(Container.prototype);
+    Menu.prototype.render = function () {
+        var res = '<ul id="' + this.id + '" class="' + this.className + '">';
+
+        for (var item in this.items) {
+            if (this.items.hasOwnProperty(item) && (this.items[item] instanceof MenuItem || this.items[item] instanceof SubMenu)) {
+                res += this.items[item].render();
+            }
+        }
+        res += '</ul>';
+
+        return res;
+    };
+
+    function SubMenu(myId, myClass, myItems) {
+        Menu.call(this, myId, myClass, myItems);
+    }
+
+    SubMenu.prototype = Object.create(Menu.prototype);
+    SubMenu.prototype.render = function () {
+        return '<li>' + Menu.prototype.render.call(this) + '</li>';
+    };
+
+    function MenuItem(myHref, myName) {
+        Container.call(this);
+        this.href = myHref;
+        this.name = myName;
+    }
+
+    MenuItem.prototype = Object.create(Container.prototype);
+    MenuItem.prototype.render = function () {
+        return '<li><a href="' + this.href + '">' + this.name + '</a></li>';
+    };
+
+    var menu = new Menu('my_menu', 'my_menu', [
+        new MenuItem('/', 'Главная'),
+        new MenuItem('/about/', 'О нас'),
+        new MenuItem('/contacts', 'Контакты'),
+        new SubMenu('submenu', 'submenu', [
+            new MenuItem('/payment', 'Оплата'),
+            new MenuItem('/delivery', "Доставка")
+        ]),
+        new MenuItem('/catalog', "Каталог")
+    ]);
+
+    document.getElementById('render').addEventListener('click', function () {
+        var nav = document.querySelector('nav');
+        nav.innerHTML = menu.render();
+    });
+
+    document.getElementById('remove').addEventListener('click', function () {
+        menu.remove();
+    });
+
+</script>
+
+</body>
+</html>
