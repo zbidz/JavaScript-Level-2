@@ -1,0 +1,123 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+.container h2 {
+	margin-left: 600px;
+}
+
+.btns {
+	display: flex;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.tabs {
+	margin: 0 auto;
+	width: 600px;
+}
+
+.btn {
+	cursor: pointer;
+	border-radius: 5px 5px 0 0;
+	min-width: 100px;
+	width: 150px;
+	height: 30px;
+	background: #4ba263;
+	outline: none;
+}
+
+.btn p {
+	margin-top: 5px;
+}
+
+.btn:hover {
+	background: palegreen;
+}
+
+.block {
+	display: none;
+	border: 2px solid lightblue;
+	border-radius: 0 0 5px 5px;
+	background-color: lightblue;
+	margin-top: -2px;
+	padding: 13px;
+}
+
+.active {
+	display: block;
+	background-color: white;
+}
+
+.btns .active {
+	border: 2px solid lightblue;
+	border-bottom-color: white;
+}
+
+.tabs1 {
+	margin: 0 auto;
+	width: 600px;
+}
+
+.btns1 {
+	text-align: center;
+	position: absolute;
+	z-index: 1;
+}
+
+.btn1 {
+	cursor: pointer;
+	border-radius: 5px 0 0 5px;
+	min-width: 100px;
+	width: 150px;
+	height: 30px;
+	background: #4ba263;
+	outline: none;
+}
+
+.btn1 p {
+	margin-top: 5px;
+}
+
+.blocks1 {
+	width: 445px;
+	margin-left: 154px;
+}
+
+.block1 {
+	display: none;
+	border: 2px solid lightblue;
+	border-radius: 0 5px 5px 5px;
+	background-color: white;
+	margin-left: -2px;
+	padding: 13px;
+}
+
+.btns1 .active {
+
+	border: 2px solid lightblue;
+	border-right-color: white;
+}
+
+.btn1:hover {
+	background: palegreen;
+}
+
+.active {
+	display: block;
+	background-color: white;
+}
+
+.active:hover {
+	background: none;
+}
+.form {
+	width: 300px;
+	margin: 0 auto;
+}
+#form input {
+	outline: none;
+	min-width: 300px ;
+	min-height: 30px;
+	border: 1px solid lightgrey;
+}
