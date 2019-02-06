@@ -1,0 +1,26 @@
+{
+  "result": true,
+  "reviews": [
+    {
+      "user": 123,
+      "name": "Ivan",
+      "id": 1,
+      "message": "Хорошо! Мне понравилось!",
+      "moderated": true
+    },
+    {
+      "user": 234,
+      "name": "Maria",
+      "id": 2,
+      "message": "Просто восхитительно!",
+      "moderated": true
+    },
+    {
+      "user": 345,
+      "name": "Test",
+      "id": 3,
+      "message": "Гуууууууудддддддд)",
+      "moderated": false
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Menu</title>
+</head>
+<body>
+
+<div id="menu"></div>
+<div class="button">
+	<button class="delete">удалить</button>
+</div>
+<script>
+
+	   // Описываем базовый класс
+		 function Container() {
+		this.id = '';
+		this.className = '';
+		this.htmlCode = '';
+	}
+
+	Container.prototype.render = function () {
+		return this.htmlCode;
+	};
+
+	Container.prototype.delete = function (htmlNode) {
+		htmlNode.remove();
+		return null;
+	}
+
+	// Описываем класс меню
+	function Menu(my_id, my_class, my_items) {
+		Container.call(this);
+
+		this.id = my_id;
+		this.className = my_class;
+		this.items = my_items;
+	}
+
+	Menu.prototype = Object.create(Container.prototype);
+	Menu.prototype.constructor = Menu;
+
+	Menu.prototype.render = function () {
+
+		var result = '<ul class="' + this.className + '" id="' + this.id + '">';
+		this.items.forEach(function (item) {
+			result += item.render();
+		});
+
+
+		result += '</ul>';
+		this.htmlCode = result;
+		return this.htmlCode;
+	};
+
+
+//		 Многоуровневое меню
+	function SubMenu(submenu){
+			 MenuItem.call(this);
+			 this.submenu = submenu;
+			 this.href = submenu.href;
+			 this.title = submenu.title;
+		 }
+
+		 SubMenu.prototype = Object.create(MenuItem.prototype);
+		 SubMenu.prototype.constructor = SubMenu;
+
+//Рукурсивный рендер
+		 SubMenu.prototype.render = function() {
+			 var result = '';
+
+			 // SubMenu должен быть обязательно массив
+			 if(Array.isArray(this.submenu)){
+
+				    for(var i = 0; i < this.submenu.length;i++){
+
+							result += '<li><a href="' + this.submenu[i].href + '">' + this.submenu[i].title + '</a>';
+
+							   if (this.submenu[i].submenu !== undefined){
+
+									result += '<ul>';
+									result += (new SubMenu(this.submenu[i].submenu)).render();
+									result += '</ul>';
+								}
+								result+='</li>';
+							}
+			 }
+			 return result;
+		 };
+
+	// Описываем класс пунктов меню
+	function MenuItem(my_href, my_name, sub_menu) {
+		Container.call(this);
+		this.href = my_href;
+		this.name = my_name;
+		this.submenu = sub_menu || null;
+	}
+
+	MenuItem.prototype = Object.create(Container.prototype);
+	MenuItem.prototype.constructor = MenuItem;
+
+	MenuItem.prototype.render = function () {
+  var result = '';
+		if(this.submenu === null){
+			result += '<li><a href="' + this.href + '">' + this.name + '</a></li>';
+		}else{
+				result += '<li><a href="' + this.href + '">' + this.name + '</a>';
+				result += "<ul>";
+				result += (new SubMenu(this.submenu)).render();
+				result += "</ul>";
+				result += '</li>';
+		}
+		return result;
+	};
+
+
+	window.onload = function () {
+
+		 var xhr = new XMLHttpRequest();
+		 xhr.open("GET","json/menu.json", true);
+		 xhr.send();
+
+		 xhr.onreadystatechange =  function() {
+
+			if (xhr.readyState !== 4) return;
+
+			if (xhr.status !== 200) {
+				console.log('Error', xhr.status,xhr.statusText);
+			}else{
+				var items = JSON.parse(xhr.responseText);
+				var menuItems = [];
+				 for(var i = 0; i< items.length;i++){
+				  	menuItems.push(new MenuItem(items[i].href, items[i].title,items[i].submenu))
+				 }
+
+				var menuBlock = document.getElementById('menu');
+				var menu = new Menu('my_menu', 'my_class', menuItems);
+				menuBlock.innerHTML = menu.render();
+
+				document.querySelector('.delete').addEventListener('click', function(){
+					menu = menu.delete(menuBlock);
+					console.log('Menu=',menu);
+				});
+			}
+		};
+  }
+
+</script>
+</body>
+</html>

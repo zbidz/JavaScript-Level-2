@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomeWork 3 Dmitriy Bondarenko</title>
+</head>
+<body>
+<h2>Задание 1 и 2</h2>
+
+
+<form id="form_1" action="" method="post">
+    <textarea name="" id="text_before" cols="60" rows="10"></textarea><br>
+    <input type="button" class="send" value="Заменить" onclick="substitution('form_1', 'text_before')">
+</form>
+
+<div id="text_after"></div>
+
+<h2>Задание 3</h2>
+
+<form id="form_2" action="" onsubmit="javascript:return validate('form_2', 'name', 'phone', 'email')" method="post">
+    <input type="text" id="name" placeholder="Ваше имя"><br><br>
+    <input type="tel" id="phone" placeholder="+7(000)000-0000"><br><br>
+    <input type="email" id="email" placeholder="Введите емайл"><br><br>
+    <input type="submit" value="Отправить">
+</form>
+
+<script>
+    function substitution(form_1, text_before) {
+        var text_before = document.forms[form_1].elements[text_before].value;
+        var text_after = document.getElementById('text_after');
+        text_after.innerText = text_before.replace(/'([А-Яа-яёЁa-zA-Z]+)'/g, '"$1"');
+    }
+</script>
+
+<script>
+    function validate(form_2, name, phone, email) {
+        var regName = /^[a-zA-Zа-яА-ЯёЁ]*[^.0-9\/#@&?;:|,><}{')(*^%!"\][]$/;
+        var name = document.forms[form_2].elements[name].value;
+        if (regName.test(name) == false) {
+            var border = document.getElementById('name');
+            border.setAttribute('style', 'border: 1px solid red');
+        } else {
+            var border = document.getElementById('name');
+            border.setAttribute('style', 'border: 1px solid lightgreen');
+        }
+
+        var regPhone = /^\+\d\(\d{3}\)\d{3}-\d{4}$/i;
+        var phone = document.forms[form_2].elements[phone].value;
+        if (regPhone.test(phone) == false) {
+            var border = document.getElementById('phone');
+            border.setAttribute('style', 'border: 1px solid red');
+        } else {
+            var border = document.getElementById('phone');
+            border.setAttribute('style', 'border: 1px solid lightgreen');
+        }
+
+        var regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+        var address = document.forms[form_2].elements[email].value;
+        if (regEmail.test(address) == false) {
+            var border = document.getElementById('email');
+            border.setAttribute('style', 'border: 1px solid red');
+
+        } else {
+            var border = document.getElementById('email');
+            border.setAttribute('style', 'border: 1px solid lightgreen');
+        }
+
+        return false;
+    }
+</script>
+</body>
+</html>
